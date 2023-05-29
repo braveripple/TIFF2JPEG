@@ -1,0 +1,33 @@
+plugins {
+	id 'eclipse-wtp'
+	id 'com.github.johnrengelman.shadow' version '7.1.0'
+	id 'java-library'
+}
+
+sourceCompatibility = 8
+tasks.withType(JavaCompile) {options.encoding = 'UTF-8'}
+repositories.mavenCentral()
+
+dependencies {
+    // Use JUnit test framework
+    testImplementation 'junit:junit:4.12'
+
+	implementation group: 'com.twelvemonkeys.imageio', name: 'imageio-core', version: '3.9.4'
+	implementation group: 'com.twelvemonkeys.imageio', name: 'imageio-metadata', version: '3.9.4'
+	implementation group: 'com.twelvemonkeys.imageio', name: 'imageio-tiff', version: '3.9.4'
+	implementation group: 'args4j', name: 'args4j', version: '2.33'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'	
+}
+
+jar {
+  manifest {
+    attributes "Main-Class": "com.braveripple.TiffCheck"
+  }
+}
+
+shadowJar {
+    // 生成するjarの名前から'-all'を削除する。
+    // この設定をしないと「<プロジェクト名>-all.jar」が生成される。
+    archiveFileName = 'TiffCheck.jar'
+    //classifier = null
+}
